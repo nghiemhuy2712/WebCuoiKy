@@ -23,6 +23,27 @@ class Admin extends CI_Controller {
 		$this->load->model('Products_model');
 		$this->load->view('Admin/Admin_view');
 	}
+
+
+	// public function testlogin()
+	// {
+	// 	if($this->session->userdata('accout')==NULL)
+	// 	{
+	// 		$accout['tentaikhoan'] = "admin";
+	// 		$accout['isADmin'] = 1;
+	// 		$accout = array('accout' => $accout);
+	// 		$this->session->set_userdata($accout);
+	// 	}
+	// 	$this->load->model('Products_model');
+	// 	$this->load->view('Admin/LoadingAdmin_view');
+	// }
+
+	public function logout()
+	{
+		session_destroy();
+		$this->load->model('Products_model');
+		$this->load->view('Admin/LoadingAdmin_view');
+	}
 //--------------------------------------------- Quản lý sản phẩm---------------------------------------------
 	public function showListItem()//hiển thị danh sách sp
 	{
@@ -357,7 +378,8 @@ class Admin extends CI_Controller {
 			echo "<script type='text/javascript'>alert('Xóa thành công');</script>";
 			$this->load->view('Admin/LoadingManaT_view');
 		}else{
-			echo "<script type='text/javascript'>alert('Có sản phẩm đang sử dụng loại này, không thể xóa');</script>";
+			$sl = $this->AdminManaDetail_model->checkSlT($idloai);
+			echo "<script type='text/javascript'>alert('Có sản $sl phẩm đang sử dụng loại này, không thể xóa');</script>";
 			$this->load->view('Admin/LoadingManaT_view');
 		}
 	}

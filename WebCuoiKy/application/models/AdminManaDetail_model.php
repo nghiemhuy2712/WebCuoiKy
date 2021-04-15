@@ -137,6 +137,11 @@ class AdminManaDetail_model extends CI_Model {
 		}
 	}
 
+	public function checkSlT($idloai)
+	{
+		$this->db->where('idloaiao', $idloai);
+ 		return count($this->db->get('ao')->result_array());
+	}
 	public function updateTbyID($idloai,$tenloai)
 	{
 		$loaisua = array('idloaiao' => $idloai,'tenloaiao' => $tenloai);

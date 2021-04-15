@@ -9,7 +9,10 @@ class ConTactPage extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('Contact/ConTact_view');
+		$this->load->model('Products_model');
+		$arLoaiao = $this->Products_model->GetLoaiAo();
+		$aritems = array('arLoaiao'=>$arLoaiao);
+		$this->load->view('ConTact_view',$aritems,FALSE);
 	}
 
 }

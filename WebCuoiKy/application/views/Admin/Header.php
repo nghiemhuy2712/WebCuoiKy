@@ -13,13 +13,26 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
 
+	<!-- <a class="dropdown-item" href="<?php echo base_url()?>index.php/Admin/testlogin">testlogin</a> -->
+
+	<?php $login = $this->session->userdata('accout') ?>
+
 	<?php 
-		if ($this->session->userdata('accout')==NULL&&$this->session->userdata('accout')['isADmin']!="1"){
+		if(!isset($login)){
+			echo "Chưa đăng nhập";
+			die();
+		}else if($this->session->userdata('accout')['tentaikhoan']=="a"){
+			echo "Chưa đăng nhập";
+			die();
+		}else if($this->session->userdata('accout')['isADmin']!="1"){
 			echo "Chưa đăng nhập";
 			die();
 		}
 	?>
 
+	<?php 
+		if ($this->session->userdata('accout')!=NULL&&$this->session->userdata('accout')['isADmin']=="1"):
+	?>
 	  <a class="navbar-brand" href="<?php echo base_url()?>index.php/Admin">Trang chủ</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
@@ -75,8 +88,28 @@
 	      </li>
 	    <!--End Quản lý hóa đơn-->
 
+
+
+	    <li class="nav navbar-nav ml-auto">
+	    	<div>
+	    		<span class="btn btn-info" class="badge badge-light" ><?php echo $this->session->userdata('accout')['tentaikhoan'] ?></span>
+	    	</div>
+	    </li>
+	    <!--Logout-->
+	    <li class="nav-item dropdown">
+	        <a class="nav-link" href="<?php echo base_url()?>index.php/Admin/logout" id="navbarDropdown" >
+	          Đăng xuất
+	        </a>
+<!-- 	        <div class="dropdown-content">
+	          <a class="dropdown-item" href="">test logout</a>
+	        </div> -->
+	    </li>
+	    <!--End Logout-->
+
 	    </ul>
 	  </div>
+
+	<?php endif ?>
   </div>
 </nav>
 <!--End menu-->

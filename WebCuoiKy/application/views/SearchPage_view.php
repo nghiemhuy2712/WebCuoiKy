@@ -7,9 +7,10 @@
 <hr>
 <div class="container">
 	<div class="row mt-5">
+	<!-- <?php echo $config['product_keyword'] ?> -->
 				<div class="list-product-subtitle" >
 					<h2>
-						<?php echo "Kết quả tìm kiếm của '".$keyword."' là :" ?>
+						<?php echo "Kết quả tìm kiếm của '".$config['product_keyword']."' là :" ?>
 					</h2>
 				</div>
 	</div>
@@ -27,6 +28,11 @@
 						</div>
 					</div>
 					<?php endforeach ?>
+					<?php for ($i=1; $i <= $config['maxPage']  ; $i++) { 
+					?>
+					<a href="<?php echo base_url()?>index.php/HomePage/search_keyword<?php echo '?keyword='.$config['product_keyword'].'&'.'page='.$i ?>"><?php echo $i; ?></a>
+						<?php
+					} ?>
 		</div>
 	</div>
 </div>

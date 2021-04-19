@@ -20,13 +20,20 @@ class StudentPagination_Model extends CI_Model
         }
         return $this->db->get('ao')->result_array();
     }
+    
     public function GetAobyTenAo($ten, $start = -1, $limit = -1)
     {
         $this->db->like('ten',$ten);
+        
         if ($start > 0 && $limit > 0) {
-            return $this->db->get('ao', $limit, $start)->result_array();
+            $data= $this->db->get('ao', $limit, $start)->result_array();
+
         }
-        return $this->db->get('ao')->result_array();
+        else $data= $this->db->get('ao')->result_array();
+
+         $this->db->last_query();
+       // var_dump($data);exit;
+        return $data;
     }
     public function get_students($limit, $start) 
 	{

@@ -113,17 +113,40 @@ class HomePage extends CI_Controller {
 		}
 	public function search_keyword() 
     {
-
-        $keyword   =  $this->input->post('keyword');
-        $this->load->model('Products_model');
-        // $arao = $this->Products_model->search($keyword);
-        $arao = $this->StudentPagination_Model->GetAobyTenAo($keyword);
+    	$this->load->model('Products_model');
+        $this->load->model('LoginPage_model');
         $arLoaiao = $this->Products_model->GetLoaiAo();
         $arsize = $this->Products_model->GetLoaiSize();
         $arMau = $this->Products_model->GetLoaiMau();
 
-        $aritems = array('arao' => $arao,'arLoaiao'=>$arLoaiao,'arsize'=>$arsize,'arMau'=>$arMau,'keyword'=>$keyword);
-        $this->load->view('SearchPage_view',$aritems);
+    	$config = array();
+        $config['key'] = $this->input->get('keyword'); 
+ 
+        $keyword = $this->input->get('keyword');
+        
+        if ($keyword!=NULL) {
+        	$fullAo = $this->StudentPagination_Model->GetAobyTenAo($keyword);
+        }
+        else
+        {
+        	$fullAo = $this->StudentPagination_Model->GetAobyTenAo($config['key']);
+        }
+
+        $config['page'] = empty($this->input->get('page')) ? 1 : $this->input->get('page');
+		$config['per_page'] = empty($this->input->get('show')) ? 8 : $this->input->get('show');
+
+		$config['total'] = count($fullAo);
+		$config['maxPage'] = ceil($config['total']/$config['per_page']);
+		
+		$config['product_keyword'] = $keyword;
+
+		$start = ($config['page'] - 1) * $config['per_page'] + 1;
+
+		
+
+		$arao = $this->StudentPagination_Model->GetAobyTenAo($config['key'], $start, $config['per_page']);
+        $aritems = array('arao' => $arao,'arLoaiao'=>$arLoaiao,'arsize'=>$arsize,'arMau'=>$arMau,'keyword'=>$keyword,'config'=>$config);
+        $this->load->view('SearchPage_view',$aritems,FALSE);
     }
 	public function IDLOAIAO($id)
 		{	$this->load->model('Products_model');

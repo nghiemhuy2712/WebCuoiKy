@@ -56,10 +56,11 @@ class Cart_model extends CI_Model {
 		$this->db->where('iduser', $id);
 		return $this->db->update('user',$data);
 	}
-	public function UpdateSoluongById($id,$slm)
+	public function UpdateSoluongById($id, $slm)
 		{
 			$this->db->where('idcthd', $id);
-			return $this->db->update('chitiethoadon',$slm);
+			$data = array('soluong' => $slm);	
+			return $this->db->update('chitiethoadon', $data);
 		}
 	public function DeleteCTHDByIdao($id)
 	{

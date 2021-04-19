@@ -5,11 +5,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>vendor/style.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>vendor/nguhoc.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>vendor/css/bootstrap.min.css">
-</head>
-<style>
-	
-	html, body {
+	<style type="text/css">
+		html, body {
 		  height: 100%;
 		  width: 100%;
 		  margin: 0;
@@ -131,11 +130,13 @@
 		    width: 220px;
 		    top: -85px;
 		  }
-		}*/*/*/*/*/*/*/*/*/*/*/
-</style>
+		}*/*/*/*/*/*/*/*/*/
+	</style>
+</head>
 <body>
 <!-- menu -->
-<nav  class="navbar navbar-expand-lg navbar-light bg-light" >
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
 	  <a class="navbar-brand" href="#">GGWP SHOP</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
@@ -166,24 +167,27 @@
 	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">TIM KIEM</button>
 	    </form>
 	  </div>
+  </div>
 </nav>
 <!-- end menu -->
 <!-- list product -->
-<div style="margin-left: 100px; margin-top: 20px;">THÔNG TIN SẢN PHẨM</div>
-<main class="container" >
+<div style="margin-left: 100px; margin-top: 20px; font-size: 25px;">THÔNG TIN SẢN PHẨM</div>
+<main class="container">
 <?php foreach ($arid as $key1 => $value1): ?>
-  <div>
-     <img class="left-column" class="card-img-top"  src="<?php echo $value1['hinh'] ?>" alt="Card image cap">
+  <div class="left-column">
+  	
+     <img style="width:500px;height:600px;"class="card-img-top" src="<?php echo $value1['hinh'] ?>" alt="Card image cap">
+
   </div>
   
   <?php endforeach ?>
   <!-- Right Column -->
-  <div style="margin-left: 20px;" class="col-sm-5" class="right-column">
+  <div class="right-column">
   
     <!-- Product Description -->
     <div class="product-description">
      
-      <h1 style="font-weight: bold; text-transform: uppercase; " class="card-title"><?php echo $value1['ten'] ?></h1>
+      <h1 style="font-weight: bold; text-transform: uppercase;" class="card-title"><?php echo $value1['ten'] ?></h1>
       <p class="card-text">Mô Tả:<?php echo $value1['mota'] ?></p>
     </div>
   
@@ -197,7 +201,7 @@
      <p><input type="text" name="id" value="<?php echo $value1['id'] ?>" readonly hidden class="form-control" ></p>
     </div>
 
-    <div style="margin-left: 18px;" class="product-description">
+    <div class="product-description">
 	    <div class="nav-item dropdown form-group row" >
 	    	<form method="post" action="<?php echo base_url() ?>index.php/CartPage/TaoDonHang/<?php echo $value1['id'] ?>">
 	    		<!--product-description loai ao-->

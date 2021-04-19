@@ -3,24 +3,19 @@
 <style>
 	.a:hover
 	{
-		transform: scale(1.08);
-        transition: all 0.4s ease-in-out
-	} 
-	
+		border: black 1px ;
+	}
 	.bg-image{
 		width: 220px;
 		height: 300px;
 	} 
-	.bg-image:hover
-	{
-	    
-	}
 </style>
 <?php include 'header.php'; ?>
 <body>
 <?php include 'navbar.php'; ?>
 <?php include 'slide.php'; ?>
 <hr> 
+
 <div class="container" >
 	<?php if ($arao): ?>
 		<div class="row mt-5">

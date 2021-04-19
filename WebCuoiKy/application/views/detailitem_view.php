@@ -136,7 +136,6 @@
 <body>
 <!-- menu -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
 	  <a class="navbar-brand" href="#">GGWP SHOP</a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
@@ -145,29 +144,54 @@
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="<?php echo base_url() ?>">TRANG CHU <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="<?php echo base_url() ?>">TRANG CHỦ <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">LIEN HE</a>
+	        <a class="nav-link" href="<?php echo base_url() ?>index.php/ConTactPage">LIÊN HỆ</a>
 	      </li>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link" href="#" id="navbarDropdown" >
-	          SAN PHAM
+	          SẢN PHẨM
 	        </a>
 	        <div class="dropdown-content">
-	          <a class="dropdown-item" href="#">AO THUN</a>
-	          <a class="dropdown-item" href="#">AO KHOAC</a>
-	          <div class="dropdown-divider"></div>
-	          <a class="dropdown-item" href="#">AO SO MI</a>
+	          <?php foreach ($arLoaiao as $key => $value): ?>
+	          	 <a class="dropdown-item" href="<?php echo base_url()?>index.php/HomePage/IDLOAIAO/<?php echo $value['idloaiao'] ?>"><?php echo $value['tenloaiao'] ?></a>
+	          <?php endforeach ?>
 	        </div>
 	      </li>
 	    </ul>
-	    <form class="form-inline my-2 my-lg-0">
-	      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-	      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">TIM KIEM</button>
-	    </form>
+	    <!-- btn Gio Hang -->
+		<a href="<?php echo base_url() ?>index.php/CartPage" class="btn btn-info" role="button">Giỏ Hàng
+			<span class="badge badge-light">
+				<?php if ($this->session->userdata('accout')): ?>
+
+					<?php 
+					$data=$this->session->all_userdata();
+					if(isset($data['soluongsanpham']))
+					{
+						echo $data['soluongsanpham'];
+					}
+					else
+					{
+						echo 0;
+					}
+					?>
+			<?php endif ?>
+			</span>
+		</a>
+<!-- 		btnLOGIN -->
+		<?php if ($this->session->userdata('accout')&&$this->session->userdata('accout')['tentaikhoan']=="a"): ?>
+			<a href="<?php echo base_url() ?>index.php/SignInPage" class="btn btn-info" role="button">Đăng Nhập</a>
+
+		<?php endif ?>
+		<?php if ($this->session->userdata('accout')): ?>
+				<?php if ($this->session->userdata('accout')['tentaikhoan']!="a"): ?>
+					<a href="<?php echo base_url() ?>index.php/HomePage/LogOut" class="btn btn-info" role="button">Đăng Xuất</a>
+					<span>Hi, <?php echo $this->session->userdata('accout')['tenhienthi'] ?>
+					</span>
+				<?php endif ?>
+			<?php endif ?>
 	  </div>
-  </div>
 </nav>
 <!-- end menu -->
 <!-- list product -->
@@ -205,12 +229,21 @@
 	    <div class="nav-item dropdown form-group row" >
 	    	<form method="post" action="<?php echo base_url() ?>index.php/CartPage/TaoDonHang/<?php echo $value1['id'] ?>">
 	    		<!--product-description loai ao-->
-		        <label for="loaiao">Loại Áo :</label>
-				<select class="form-control" id="" name="loaiao">
-				    <?php foreach ($arLoaiao as $key => $value): ?>
-				    	<option value="<?php echo $value['idloaiao']?>"> <?php echo $value['tenloaiao'] ?></option>
-				    <?php endforeach ?>
-				</select>
+	    		
+		        	<!-- <p style="font-weight: bold;" class="card-text">Loại Áo :
+					    	<input  type="text" value="<?php foreach ($arLoaiao as $key2 => $value2): ?><?php if($value2['idloaiao'] == $value1['idloaiao']):?><?php  echo $value2['tenloaiao']?><?php endif ?><?php endforeach ?>">
+					    	
+					    </p> -->
+					  <label for="loaiao">Loai Ao :</label>
+					  
+			    <select  class="form-control" id="" name="loaiao">
+			    	<?php foreach ($arLoaiao as $key => $value2): ?>
+			      		<?php if($value2['idloaiao'] == $value1['idloaiao'] ): ?>
+			    			<option value="<?php echo $value2['idloaiao']?>"> <?php echo $value2['tenloaiao'] ?></option>
+ 			    		<?php endif ?>
+			    	<?php endforeach ?>
+			    </select>
+					     
 	 			<!--product-description loai size-->
 	            <label for="loaisizeao">Size Áo :</label>
 			    <select class="form-control" id="" name="loaisize">
@@ -245,5 +278,5 @@
 <script src="<?php echo base_url() ?>vendor/jquery-3.3.1.min.js"></script>
 <script src="<?php echo base_url() ?>vendor/js/bootstrap.min.js"></script>
 </body>
-
+<?php include 'footer.php'; ?>
 </html>

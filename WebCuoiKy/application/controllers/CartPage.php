@@ -47,6 +47,7 @@ class CartPage extends CI_Controller {
 	}
 	public function TaoDonHang($id)
 	{
+
 		$loaiao = $this->input->post('loaiao');
 		$loaisize = $this->input->post('loaisize');
 		$loaimau = $this->input->post('loaimau');
@@ -66,11 +67,30 @@ class CartPage extends CI_Controller {
 		{
 			$arao[0]['idloaimau']=$loaimau;
 		}
+		//cho thay doi dung ban tam toi :v
 		if(isset($user)){
 			$NowHD=$this->Cart_model->GetHoaDonByUser($user);
+			
 			if(isset($NowHD))
 			{
-				$arCTDH = $this->Cart_model->TaoChiTietHoaDon($NowHD['idhd'],$id,$arao[0]['idloaiao'],$arao[0]['idloaisize'],$arao[0]['idloaimau']);
+				// Check hàng có trong chi tiết đơn hàng chưa
+				$check = false;
+				$arCT = $this->Cart_model->GetAoTuChitietDonHang($user);
+				// echo "<pre>";
+				// var_dump($arCT);
+				// echo "</pre>";
+				// die();
+				foreach ($arCT as $key => $value) {
+					if ($value['idao'] == $id && $loaiao == $value['idloaiao']) {
+						$arCT[$key]['soluong']++;
+						$check = true;
+						$this->Cart_model->UpdateSoluongById($arCT[$key]['idcthd'], $arCT[$key]['soluong']);
+						break;
+					}
+				}
+				if ($check == false) {
+					$arCTDH = $this->Cart_model->TaoChiTietHoaDon($NowHD['idhd'],$id,$arao[0]['idloaiao'],$arao[0]['idloaisize'],$arao[0]['idloaimau']);
+				}
 				redirect('CartPage','refresh');
 			}
 			else{
@@ -93,6 +113,16 @@ class CartPage extends CI_Controller {
 		if($this->Cart_model->DeleteCTHDByIdao($id)){
 			redirect('CartPage','refresh');
 			}
+	}
+	public function KiemtraTrung($id,$arr)
+	{
+		if (in_array($id,$arr)) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	public function ThanhToan($id)
 	{

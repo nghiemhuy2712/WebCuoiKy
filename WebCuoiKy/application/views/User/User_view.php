@@ -11,6 +11,7 @@
 <?php include 'navbar.php'; ?>
 <?php include 'slide.php'; ?>
 <hr> 
+<?php $this->session->userdata('accout'); ?> 
 <div class="container">
 	<h2 class="text-center">Thông tin tài khoản</h2>
 	<form action="User/updateAccout" method="post" enctype="multipart/form-data">
@@ -52,10 +53,8 @@
 		</div>
 		<button type="submit" class="btn btn-primary mb-2">Thay đổi thông tin</button>
 	</form>
-	<?php if( $this->session->userdata('accout')['isADmin']==1): ?>
-	    	<a href="<?php echo base_url() ?>index.php/Admin" class="btn btn-info" role="button">Vào Trang Admin</a>
-	<?php endif ?>
 </div>
+
 <script src="<?php echo base_url() ?>vendor/jquery-3.3.1.min.js"></script>
 <script src="<?php echo base_url() ?>vendor/js/bootstrap.min.js"></script>
 <hr>
